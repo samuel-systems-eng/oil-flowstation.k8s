@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: pump-calibration
+data:
+    TARGET_FLOW: "75"
+    SAFETY_LIMIT: "200"
