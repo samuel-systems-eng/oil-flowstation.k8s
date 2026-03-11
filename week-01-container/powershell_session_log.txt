@@ -1,0 +1,22 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260309203624
+Username: SAMBILLION\Mr Samuel
+RunAs User: SAMBILLION\Mr Samuel
+Configuration Name: 
+Machine: SAMBILLION (Microsoft Windows NT 10.0.22631.0)
+Host Application: C:\WINDOWS\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 16720
+PSVersion: 5.1.22621.6133
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.22621.6133
+BuildVersion: 10.0.22621.6133
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is .\week-01-container\powershell_session_log.txt
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> minikube stop
+* Stopping node "minikube"  ...
+* 1 node stopped.

@@ -12,8 +12,12 @@ WEEK - 01
 **Goal:** Transition physical instrumentation logic into a cloud-native container.
 *   **Activity:** Built a `mock_plc.py` to simulate a crude oil discharge line.
 *   **SRE Win:** Resolved a DNS timeout in Minikube by investigating the network bridge (documented in `/week-01-container/TROUBLESHOOTING.md`).
-*   **Proof of Life:** See telemetry stream [here](././week-01-container/telemetry-proof.png).
+*   **Proof of Life:** See telemetry stream [here](./week-01-container/telemetry-proof.png).
+Full terminal session logs for Week 1 can be found here for audit and troubleshooting reference.
 
 ---
-### Week 2: Edge Networking & MQTT Brokers (UPCOMING)
-**Goal:** Move from a single Pod to a Service-oriented architecture.
+### Week 2: Internal Networking & Message Brokering (COMPLETE)
+**Goal:** Implement a Service-Oriented Architecture (SOA) for telemetry ingestion.
+*   **Activity:** Deployed an **Eclipse Mosquitto** MQTT Broker as a K8s Deployment/Service.
+*   **SRE Win:** Configured **Service Discovery**, allowing the PLC pod to locate the "Data Junction Box" via DNS rather than static IPs.
+*   **Proof of Connectivity:** Successfully verified the MQTT handshake and message publication via `kubectl logs` (see full terminals for details).

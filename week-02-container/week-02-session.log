@@ -1,0 +1,458 @@
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl get pods
+NAME                                   READY   STATUS    RESTARTS      AGE
+kubernetes-bootcamp-67fbdd6b79-nm8wr   1/1     Running   4 (43h ago)   2d19h
+kubernetes-bootcamp-67fbdd6b79-rb748   1/1     Running   2 (43h ago)   2d3h
+my-plc-test                            1/1     Running   1             44h
+refinery-pump-b4f8447c-72jbm           1/1     Running   6 (43h ago)   4d5h
+refinery-pump-b4f8447c-mjbrd           1/1     Running   6 (43h ago)   4d5h
+refinery-pump-b4f8447c-npkct           1/1     Running   6 (43h ago)   4d5h
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container\mosquitto-stack.yaml.yaml"
+deployment.apps/mosquitto-deployment created
+service/mosquitto-service created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube image build -t flow-plc:v2
+
+minikube : X Exiting due to MK_USAGE: Please provide a path or url to build
+At line:1 char:1
++ minikube image build -t flow-plc:v2
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (X Exiting due t...or url to build 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube image build -t flow-plc:v2 ./week-02-container
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl run my-plc-v2 --image-flow-plc:v2 --image-pull-policy=Never
+kubectl : error: unknown flag: --image-flow-plc:v2
+At line:1 char:1
++ kubectl run my-plc-v2 --image-flow-plc:v2 --image-pull-policy=Never
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: unknown flag: --image-flow-plc:v2:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+See 'kubectl run --help' for usage.
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl run my-plc-v2 --image=flow-plc:v2 --image-pull-policy=Never
+
+pod/my-plc-v2 created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl logs my-plc-v2
+kubectl : Error from server (BadRequest): container "my-plc-v2" in pod 
+"my-plc-v2" is waiting to start: ErrImageNeverPull
+At line:1 char:1
++ kubectl logs my-plc-v2
++ ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error from serv...rImageNeverPull 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube image ls | Select-String "flow-plc"
+
+docker.io/library/flow-plc:v1
+
+
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl delete pod my-plc-v2
+pod "my-plc-v2" deleted
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube image build -t flow-plc:v2
+
+minikube : X Exiting due to MK_USAGE: Please provide a path or url to build
+At line:1 char:1
++ minikube image build -t flow-plc:v2
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (X Exiting due t...or url to build 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube image build -t flow-plc:v2 .
+minikube : #0 building with "default" instance using docker driver
+At line:1 char:1
++ minikube image build -t flow-plc:v2 .
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 222B 0.0s done
+#1 DONE 0.1s
+#2 [internal] load metadata for docker.io/library/python:3.9-slim
+#2 DONE 39.3s
+#3 [internal] load .dockerignore
+#3 transferring context: 2B 0.0s done
+#3 DONE 0.1s
+#4 [1/4] FROM docker.io/library/python:3.9-slim@sha256:2d97f6910b16bd338d3060f261f53f144965f755599aab1acda1e13cf1731b1b
+#4 DONE 0.0s
+#5 [2/4] WORKDIR /app
+#5 CACHED
+#6 [internal] load build context
+#6 transferring context: 1.14kB 0.0s done
+#6 DONE 0.2s
+#7 [3/4] RUN pip install paho-mqtt
+#7 36.04 Collecting paho-mqtt
+#7 42.07   Downloading paho_mqtt-2.1.0-py3-none-any.whl (67 kB)
+#7 42.53      â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â” 67.2/67.2 
+kB 149.5 kB/s eta 0:00:00
+#7 42.96 Installing collected packages: paho-mqtt
+#7 43.10 Successfully installed paho-mqtt-2.1.0
+#7 43.11 WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. 
+It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+#7 50.41 
+#7 50.41 [notice] A new release of pip is available: 23.0.1 -> 26.0.1
+#7 50.41 [notice] To update, run: pip install --upgrade pip
+#7 DONE 50.8s
+#8 [4/4] COPY mock_plc_v2.py .
+#8 DONE 0.1s
+#9 exporting to image
+#9 exporting layers
+#9 exporting layers 0.4s done
+#9 writing image sha256:701391f5936888841afff65b09cc4987f3bde9a9d213a1afea4e2fdca2d12986 done
+#9 naming to docker.io/library/flow-plc:v2 done
+#9 DONE 0.5s
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl run my-plc-v2 --image=flow-plc:v2 --image-pull-policy=Never
+pod/my-plc-v2 created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> minikube image ls
+registry.k8s.io/pause:3.10.1
+registry.k8s.io/metrics-server/metrics-server:<none>
+registry.k8s.io/kube-scheduler:v1.35.1
+registry.k8s.io/kube-proxy:v1.35.1
+registry.k8s.io/kube-controller-manager:v1.35.1
+registry.k8s.io/kube-apiserver:v1.35.1
+registry.k8s.io/etcd:3.6.6-0
+registry.k8s.io/e2e-test-images/agnhost:2.53
+registry.k8s.io/coredns/coredns:v1.13.1
+gcr.io/k8s-minikube/storage-provisioner:v5
+gcr.io/google-samples/kubernetes-bootcamp:v1
+docker.io/library/nginx:latest
+docker.io/library/nginx:<none>
+docker.io/library/flow-plc:v2
+docker.io/library/flow-plc:v1
+docker.io/library/eclipse-mosquitto:latest
+docker.io/kubernetesui/metrics-scraper:<none>
+docker.io/kubernetesui/dashboard:<none>
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl delete pod my-plc-v2 --force --grace-period=0
+kubectl : Warning: Immediate deletion does not wait for confirmation that the running resource has been terminated. The resource may continue 
+to run on the cluster indefinitely.
+At line:1 char:1
++ kubectl delete pod my-plc-v2 --force --grace-period=0
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Warning: Immedi...r indefinitely.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+pod "my-plc-v2" force deleted
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl run my-plc-v2 --image=docker.io/library/flow-plc:v2 --image-pull-policy=Never
+pod/my-plc-v2 created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl get pod my-plc-v2
+NAME        READY   STATUS    RESTARTS   AGE
+my-plc-v2   1/1     Running   0          2m9s
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl logs my-plc-v2
+/app/mock_plc_v2.py:19: DeprecationWarning: Callback API version 1 is deprecated
+, update to latest version
+  client = mqtt.Client()
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> kubectl logs -f my-plc-v2
+/app/mock_plc_v2.py:19: DeprecationWarning: Callback API version 1 is deprecated
+, update to latest version
+  client = mqtt.Client()
+Connected to Broker at mosquitto-service
+Published to flowstation/telemetry: {'pressure': 47.12, 'flow': 209.67, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.67, 'flow': 216.99, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.35, 'flow': 239.9, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.78, 'flow': 233.47, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.05, 'flow': 244.24, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.25, 'flow': 202.88, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.02, 'flow': 232.4, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.38, 'flow': 244.51, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.58, 'flow': 207.49, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.16, 'flow': 245.58, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.57, 'flow': 238.21, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.38, 'flow': 208.26, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 57.59, 'flow': 209.65, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.96, 'flow': 228.58, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.31, 'flow': 239.46, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.85, 'flow': 244.73, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.88, 'flow': 214.36, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.16, 'flow': 244.53, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.62, 'flow': 208.97, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.97, 'flow': 225.63, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.53, 'flow': 210.88, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.39, 'flow': 240.49, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 57.93, 'flow': 238.81, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.54, 'flow': 244.05, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.42, 'flow': 229.33, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.11, 'flow': 227.2, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 56.12, 'flow': 247.85, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.46, 'flow': 238.08, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.81, 'flow': 245.64, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.61, 'flow': 227.09, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.78, 'flow': 200.8, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.63, 'flow': 237.36, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.76, 'flow': 244.63, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.3, 'flow': 217.3, 'status': 
+'OK'}
+Published to flowstation/telemetry: {'pressure': 53.57, 'flow': 232.43, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.16, 'flow': 225.81, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.79, 'flow': 226.37, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.08, 'flow': 249.11, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.4, 'flow': 239.48, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.04, 'flow': 239.01, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.66, 'flow': 233.92, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 41.88, 'flow': 228.26, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 57.57, 'flow': 227.87, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.47, 'flow': 245.35, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.7, 'flow': 226.02, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.37, 'flow': 218.84, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.45, 'flow': 237.05, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.93, 'flow': 228.71, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.09, 'flow': 241.13, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 56.99, 'flow': 228.18, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.39, 'flow': 213.95, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.29, 'flow': 245.79, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.49, 'flow': 206.78, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.73, 'flow': 223.72, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.83, 'flow': 249.82, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.88, 'flow': 243.75, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.8, 'flow': 229.37, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.54, 'flow': 202.24, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.9, 'flow': 237.59, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.81, 'flow': 228.12, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.97, 'flow': 232.28, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.52, 'flow': 226.88, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.83, 'flow': 223.04, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.49, 'flow': 245.08, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.26, 'flow': 206.63, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 56.29, 'flow': 213.74, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.63, 'flow': 242.92, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.24, 'flow': 231.9, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.91, 'flow': 204.55, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.01, 'flow': 237.34, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.29, 'flow': 206.47, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.61, 'flow': 234.25, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.4, 'flow': 242.7, 'status': 
+'OK'}
+Published to flowstation/telemetry: {'pressure': 44.0, 'flow': 208.7, 'status': 
+'OK'}
+Published to flowstation/telemetry: {'pressure': 55.21, 'flow': 215.69, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.31, 'flow': 232.74, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.6, 'flow': 222.23, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.9, 'flow': 245.69, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.91, 'flow': 210.16, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.67, 'flow': 215.14, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 41.59, 'flow': 229.36, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.4, 'flow': 204.57, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.81, 'flow': 226.47, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.32, 'flow': 226.95, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.19, 'flow': 237.67, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.94, 'flow': 238.15, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 45.28, 'flow': 225.29, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.08, 'flow': 225.82, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.89, 'flow': 231.4, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.85, 'flow': 216.75, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.09, 'flow': 230.01, 'status'
+: 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.7, 'flow': 249.64, 'status':
+ 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.9, 'flow': 219.34, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.76, 'flow': 248.46, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.3, 'flow': 218.42, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.1, 'flow': 225.81, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.98, 'flow': 221.07, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.37, 'flow': 215.03, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.75, 'flow': 236.42, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.64, 'flow': 209.59, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.8, 'flow': 248.46, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.23, 'flow': 202.48, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.8, 'flow': 218.06, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.38, 'flow': 205.72, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.61, 'flow': 211.81, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.26, 'flow': 222.29, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.26, 'flow': 217.43, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.07, 'flow': 247.21, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.26, 'flow': 218.87, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.62, 'flow': 233.24, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 41.64, 'flow': 225.69, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.85, 'flow': 200.36, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 45.87, 'flow': 233.3, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.26, 'flow': 245.4, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.64, 'flow': 249.84, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.86, 'flow': 234.11, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.32, 'flow': 248.98, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.23, 'flow': 221.88, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.65, 'flow': 240.21, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.42, 'flow': 200.46, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.38, 'flow': 209.15, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 57.6, 'flow': 240.21, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.13, 'flow': 213.52, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.14, 'flow': 238.38, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.09, 'flow': 210.44, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.5, 'flow': 248.81, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.88, 'flow': 212.91, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.4, 'flow': 233.49, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 45.85, 'flow': 232.6, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.35, 'flow': 217.39, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.94, 'flow': 209.06, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.04, 'flow': 240.09, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 41.12, 'flow': 228.34, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.19, 'flow': 228.74, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 57.93, 'flow': 215.03, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.47, 'flow': 238.07, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 42.61, 'flow': 224.23, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 45.3, 'flow': 232.35, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.37, 'flow': 242.89, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 41.54, 'flow': 202.79, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.56, 'flow': 218.9, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.24, 'flow': 230.05, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.7, 'flow': 225.97, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 45.88, 'flow': 234.79, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.43, 'flow': 217.51, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.33, 'flow': 245.44, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.06, 'flow': 238.32, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.79, 'flow': 225.51, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.32, 'flow': 210.52, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 56.42, 'flow': 216.12, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.83, 'flow': 243.85, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.21, 'flow': 201.75, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.63, 'flow': 247.42, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 57.7, 'flow': 201.39, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.49, 'flow': 224.19, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.25, 'flow': 229.13, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 53.43, 'flow': 241.37, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.54, 'flow': 210.96, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.29, 'flow': 240.59, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.0, 'flow': 242.39, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 55.02, 'flow': 249.03, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.0, 'flow': 230.76, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.92, 'flow': 220.68, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 46.91, 'flow': 224.51, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.71, 'flow': 238.76, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 51.36, 'flow': 213.49, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 44.88, 'flow': 217.99, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.81, 'flow': 215.45, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 43.21, 'flow': 213.36, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.66, 'flow': 202.07, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.41, 'flow': 224.85, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 50.2, 'flow': 201.58, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 48.6, 'flow': 208.82, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 56.31, 'flow': 233.1, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 41.85, 'flow': 240.52, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.36, 'flow': 246.41, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.47, 'flow': 240.97, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 40.46, 'flow': 203.96, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 54.22, 'flow': 242.84, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.35, 'flow': 232.43, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 58.44, 'flow': 229.21, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 47.28, 'flow': 219.49, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 49.72, 'flow': 239.96, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 59.09, 'flow': 230.15, 'status': 'OK'}
+Published to flowstation/telemetry: {'pressure': 52.14, 'flow': 243.98, 'status': 'OK'}
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-02-container> 

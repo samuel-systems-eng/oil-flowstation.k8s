@@ -1,0 +1,536 @@
+PS C:\Users\Mr Samuel> cd "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container"
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> & minikube -p minikube docker-env --shell powershell | Invoke-Expression
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> docker build -t flow-plc:v1 .
+
+docker : The term 'docker' is not recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the 
+name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:1
++ docker build -t flow-plc:v1 .
++ ~~~~~~
+    + CategoryInfo          : ObjectNotFound: (docker:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> minikube image build -t flow-plc:v1 .
+
+minikube : #0 building with "default" instance using docker driver
+At line:1 char:1
++ minikube image build -t flow-plc:v1 .
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 307B done
+#1 DONE 0.0s
+#2 [internal] load metadata for docker.io/library/python:3.9-slim
+#2 ERROR: failed to do request: Head "https://registry-1.docker.io/v2/library/python/manifests/3.9-slim": dial tcp: lookup 
+registry-1.docker.io on 192.168.43.1:53: read udp 10.0.2.15:44173->192.168.43.1:53: i/o timeout
+------
+ > [internal] load metadata for docker.io/library/python:3.9-slim:
+------
+Dockerfile:2
+--------------------
+   1 |     # Use a small Python base image
+   2 | >>> FROM python:3.9-slim
+   3 |     
+   4 |     # Set working directory inside the container
+--------------------
+ERROR: failed to build: failed to solve: python:3.9-slim: failed to resolve source metadata for docker.io/library/python:3.9-slim: failed to 
+do request: Head "https://registry-1.docker.io/v2/library/python/manifests/3.9-slim": dial tcp: lookup registry-1.docker.io on 
+192.168.43.1:53: read udp 10.0.2.15:44173->192.168.43.1:53: i/o timeout
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> minikube stop
+* Stopping node "minikube"  ...
+* 1 node stopped.
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> minikube start --dns-domain=cluster.local
+* minikube v1.38.1 on Microsoft Windows 11 Pro 23H2
+  - MINIKUBE_ACTIVE_DOCKERD=minikube
+* Using the virtualbox driver based on existing profile
+* Starting "minikube" primary control-plane node in "minikube" cluster
+minikube : ! Failing to connect to https://registry.k8s.io/ from inside the 
+minikube VM
+At line:1 char:1
++ minikube start --dns-domain=cluster.local
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (! Failing to co...the minikube VM 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+* To pull new external images, you may need to configure a proxy: 
+https://minikube.sigs.k8s.io/docs/reference/networking/proxy/
+* Configuring bridge CNI (Container Networking Interface) ...
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
+  - Using image docker.io/kubernetesui/dashboard:v2.7.0
+* Verifying Kubernetes components...
+* Some dashboard features require the metrics-server addon. To enable all featur
+es please run:
+
+	minikube addons enable metrics-server
+
+* Enabled addons: storage-provisioner, dashboard, default-storageclass
+
+! C:\K8s\kubectl.exe is version 1.32.0, which may have incompatibilities with 
+Kubernetes 1.35.1.
+  - Want kubectl v1.35.1? Try 'minikube kubectl -- get pods -A'
+* Done! kubectl is now configured to use "minikube" cluster and "default" namesp
+ace by default
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> minikube ssh "ping -c 3 8.8.8.8"
+PING 8.8.8.8 (8.8.8.8): 56 data bytes
+64 bytes from 8.8.8.8: seq=0 ttl=255 time=50.123 ms
+64 bytes from 8.8.8.8: seq=1 ttl=255 time=21.822 ms
+64 bytes from 8.8.8.8: seq=2 ttl=255 time=21.807 ms
+
+--- 8.8.8.8 ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 21.807/31.250/50.123 ms
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> minikube image build -t flow-plc:v1 .
+minikube : #0 building with "default" instance using docker driver
+At line:1 char:1
++ minikube image build -t flow-plc:v1 .
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (#0 building wit...g docker driver 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 307B done
+#1 DONE 0.0s
+#2 [internal] load metadata for docker.io/library/python:3.9-slim
+#2 DONE 13.9s
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+#4 [internal] load build context
+#4 transferring context: 1.01kB done
+#4 DONE 0.1s
+#5 [1/3] FROM docker.io/library/python:3.9-slim@sha256:2d97f6910b16bd338d3060f2
+61f53f144965f755599aab1acda1e13cf1731b1b
+#5 resolve docker.io/library/python:3.9-slim@sha256:2d97f6910b16bd338d3060f261f
+53f144965f755599aab1acda1e13cf1731b1b 0.1s done
+#5 sha256:2d97f6910b16bd338d3060f261f53f144965f755599aab1acda1e13cf1731b1b 
+10.36kB / 10.36kB done
+#5 sha256:dad5b29e3506c35e0fd222736f4d4ef25d21b219acdd73f7bb41d59996ca8e0d 
+1.74kB / 1.74kB done
+#5 sha256:085da638e1b8a449514c3fda83ff50a3bffae4418b050cfacd87e5722071f497 
+5.40kB / 5.40kB done
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 0B 
+/ 29.78MB 0.1s
+#5 sha256:b3ec39b36ae8c03a3e09854de4ec4aa08381dfed84a9daa075048c2e3df3881d 0B 
+/ 1.29MB 0.1s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 0B 
+/ 13.88MB 0.1s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+2.10MB / 29.78MB 2.0s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+4.19MB / 29.78MB 3.8s
+#5 sha256:b3ec39b36ae8c03a3e09854de4ec4aa08381dfed84a9daa075048c2e3df3881d 
+1.29MB / 1.29MB 4.7s done
+#5 sha256:ea56f685404adf81680322f152d2cfec62115b30dda481c2c450078315beb508 0B 
+/ 251B 4.7s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 0B 
+/ 13.88MB 5.2s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+6.29MB / 29.78MB 5.4s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+1.05MB / 13.88MB 5.4s
+#5 sha256:ea56f685404adf81680322f152d2cfec62115b30dda481c2c450078315beb508 
+251B / 251B 5.3s done
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+8.39MB / 29.78MB 7.0s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+2.10MB / 13.88MB 8.5s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+10.49MB / 29.78MB 8.9s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+12.58MB / 29.78MB 10.7s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+3.15MB / 13.88MB 11.7s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+14.68MB / 29.78MB 12.4s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+16.78MB / 29.78MB 14.3s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+4.19MB / 13.88MB 15.0s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+18.87MB / 29.78MB 15.9s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+20.97MB / 29.78MB 18.4s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+5.24MB / 13.88MB 18.4s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+23.07MB / 29.78MB 20.2s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+6.29MB / 13.88MB 20.7s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+25.17MB / 29.78MB 22.2s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+7.34MB / 13.88MB 23.3s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+27.26MB / 29.78MB 23.9s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+8.39MB / 13.88MB 25.2s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+29.78MB / 29.78MB 26.0s
+#5 sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 
+29.78MB / 29.78MB 26.1s done
+#5 extracting 
+sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+9.44MB / 13.88MB 26.9s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+10.49MB / 13.88MB 28.4s
+#5 extracting 
+sha256:38513bd7256313495cdd83b3b0915a633cfa475dc2a07072ab2c8d191020ca5d 2.9s 
+done
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+11.53MB / 13.88MB 29.5s
+#5 extracting 
+sha256:b3ec39b36ae8c03a3e09854de4ec4aa08381dfed84a9daa075048c2e3df3881d
+#5 extracting 
+sha256:b3ec39b36ae8c03a3e09854de4ec4aa08381dfed84a9daa075048c2e3df3881d 0.3s 
+done
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+12.58MB / 13.88MB 30.1s
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+13.63MB / 13.88MB 30.6s
+#5 extracting 
+sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08
+#5 sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 
+13.88MB / 13.88MB 30.8s done
+#5 extracting 
+sha256:fc74430849022d13b0d44b8969a953f842f59c6e9d1a0c2c83d710affa286c08 1.7s 
+done
+#5 extracting 
+sha256:ea56f685404adf81680322f152d2cfec62115b30dda481c2c450078315beb508
+#5 extracting 
+sha256:ea56f685404adf81680322f152d2cfec62115b30dda481c2c450078315beb508 done
+#5 DONE 32.9s
+#6 [2/3] WORKDIR /app
+#6 DONE 6.2s
+#7 [3/3] COPY mock_plc.py .
+#7 DONE 0.0s
+#8 exporting to image
+#8 exporting layers 0.0s done
+#8 writing image 
+sha256:b7dcc4e8af972b3c50b6345fcaf8bff45d5b4733bfdc8806aed8f34e2a60f27c done
+#8 naming to docker.io/library/flow-plc:v1 done
+#8 DONE 0.0s
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> minikube image ls | Select-String "flow-plc"
+
+
+docker.io/library/flow-plc:v1
+
+
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> kubectl run my-plc-test --image=flow-plc:v1 --image-pull-policy=Never
+
+pod/my-plc-test created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> kubectl get pods
+NAME                                   READY   STATUS    RESTARTS      AGE
+kubernetes-bootcamp-67fbdd6b79-nm8wr   1/1     Running   3 (46m ago)   22h
+kubernetes-bootcamp-67fbdd6b79-rb748   1/1     Running   1 (46m ago)   6h36m
+my-plc-test                            1/1     Running   0             50s
+refinery-pump-b4f8447c-72jbm           1/1     Running   5 (46m ago)   2d9h
+refinery-pump-b4f8447c-mjbrd           1/1     Running   5 (46m ago)   2d9h
+refinery-pump-b4f8447c-npkct           1/1     Running   5 (46m ago)   2d9h
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container>  kubectl logs -f my-plc-test
+--- Flowstation Mock PLC Started ---
+{"timestamp": 1773080807.2105172, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 51.21, "flow_bph": 217.42, "temp_f": 94.54, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080812.2168183, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 46.0, "flow_bph": 206.92, "temp_f": 94.87, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080817.2192695, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 45.57, "flow_bph": 248.3, "temp_f": 84.89, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080822.2233481, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 46.48, "flow_bph": 232.26, "temp_f": 90.45, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080827.2269804, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 51.08, "flow_bph": 224.45, "temp_f": 76.01, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080832.2323134, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 40.37, "flow_bph": 213.88, "temp_f": 74.15, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080837.237226, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 47.17, "flow_bph": 236.02, "temp_f": 72.94, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080842.2426407, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 45.03, "flow_bph": 249.01, "temp_f": 75.24, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080847.2491434, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 85.25999999999999, "flow_bph": 227.26, "temp_f": 79.71, "st
+atus": "CRITICAL_HIGH_PRESSURE"}
+{"timestamp": 1773080852.2538102, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 41.6, "flow_bph": 208.85, "temp_f": 84.37, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080857.259132, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 49.09, "flow_bph": 249.51, "temp_f": 91.45, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080862.2671268, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 43.75, "flow_bph": 213.47, "temp_f": 82.63, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080867.2706952, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 42.79, "flow_bph": 200.36, "temp_f": 80.45, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080872.2719781, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 53.83, "flow_bph": 209.22, "temp_f": 92.55, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080877.2771206, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 44.03, "flow_bph": 234.8, "temp_f": 91.34, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080882.2823339, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 59.74, "flow_bph": 213.47, "temp_f": 90.12, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080887.289252, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 73.63, "flow_bph": 235.09, "temp_f": 90.64, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080892.2940361, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 75.27000000000001, "flow_bph": 202.03, "temp_f": 81.49, "st
+atus": "OPERATIONAL"}
+{"timestamp": 1773080897.3003504, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 50.73, "flow_bph": 237.97, "temp_f": 87.69, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080902.304268, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 54.93, "flow_bph": 241.72, "temp_f": 83.29, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080907.3102086, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 42.45, "flow_bph": 223.48, "temp_f": 77.47, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080912.3131907, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 54.02, "flow_bph": 221.97, "temp_f": 85.39, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080917.318157, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 40.29, "flow_bph": 208.8, "temp_f": 90.21, "status": "OPERAT
+IONAL"}
+{"timestamp": 1773080922.324179, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 46.88, "flow_bph": 226.49, "temp_f": 73.37, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080927.3301365, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 59.01, "flow_bph": 230.63, "temp_f": 74.44, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080932.3360205, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 44.44, "flow_bph": 220.37, "temp_f": 88.44, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080937.341418, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 51.24, "flow_bph": 240.45, "temp_f": 74.08, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080942.3473282, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 59.44, "flow_bph": 249.88, "temp_f": 78.86, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080947.352532, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 55.83, "flow_bph": 223.67, "temp_f": 88.92, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080952.3577569, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 45.0, "flow_bph": 240.39, "temp_f": 83.48, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080957.3637047, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 58.12, "flow_bph": 226.19, "temp_f": 74.97, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080962.368019, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 59.76, "flow_bph": 249.12, "temp_f": 77.96, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080967.373281, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 45.53, "flow_bph": 205.09, "temp_f": 80.2, "status": "OPERAT
+IONAL"}
+{"timestamp": 1773080972.3801696, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 49.74, "flow_bph": 231.77, "temp_f": 92.27, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080977.3859856, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 80.75999999999999, "flow_bph": 220.94, "temp_f": 83.18, "st
+atus": "CRITICAL_HIGH_PRESSURE"}
+{"timestamp": 1773080982.3919055, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 57.74, "flow_bph": 221.48, "temp_f": 80.59, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080987.3981183, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 56.58, "flow_bph": 234.23, "temp_f": 75.43, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773080992.4020076, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 47.81, "flow_bph": 249.6, "temp_f": 81.09, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773080997.4042125, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 46.92, "flow_bph": 215.01, "temp_f": 92.38, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081002.410549, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 50.33, "flow_bph": 244.89, "temp_f": 78.74, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773081007.4154909, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 57.76, "flow_bph": 203.44, "temp_f": 73.16, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081012.4203053, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 57.91, "flow_bph": 211.19, "temp_f": 93.63, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081017.4205778, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 55.29, "flow_bph": 225.42, "temp_f": 80.88, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081022.4263334, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 57.73, "flow_bph": 244.02, "temp_f": 88.46, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081027.4315715, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 53.95, "flow_bph": 243.03, "temp_f": 79.44, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081032.436447, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 48.88, "flow_bph": 240.79, "temp_f": 83.84, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773081037.4420009, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 40.59, "flow_bph": 221.14, "temp_f": 85.58, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081042.4471135, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 45.63, "flow_bph": 235.69, "temp_f": 89.9, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773081047.4501467, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 55.11, "flow_bph": 235.45, "temp_f": 76.5, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773081052.450698, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 57.59, "flow_bph": 232.64, "temp_f": 77.29, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773081057.4551234, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 54.18, "flow_bph": 240.6, "temp_f": 89.76, "status": "OPERA
+TIONAL"}
+{"timestamp": 1773081062.4612737, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi": 51.58, "flow_bph": 223.15, "temp_f": 74.88, "status": "OPER
+ATIONAL"}
+{"timestamp": 1773081067.4628139, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 44.12, "flow_bph": 232.03, "temp_f": 73.19, "status": "OPERATIONAL"}
+{"timestamp": 1773081072.4681482, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 50.03, "flow_bph": 204.37, "temp_f": 79.76, "status": "OPERATIONAL"}
+{"timestamp": 1773081077.472222, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 59.07, "flow_bph": 239.22, "temp_f": 90.54, "status": "OPERATIONAL"}
+{"timestamp": 1773081082.4743626, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 52.92, "flow_bph": 226.01, "temp_f": 76.94, "status": "OPERATIONAL"}
+{"timestamp": 1773081087.48113, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi
+": 53.57, "flow_bph": 214.53, "temp_f": 75.28, "status": "OPERATIONAL"}
+{"timestamp": 1773081092.4867232, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 40.67, "flow_bph": 213.59, "temp_f": 89.85, "status": "OPERATIONAL"}
+{"timestamp": 1773081097.4922233, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 76.50999999999999, "flow_bph": 245.46, "temp_f": 85.15, "status": "OPERATIO
+NAL"}
+{"timestamp": 1773081102.4973412, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 46.43, "flow_bph": 230.86, "temp_f": 88.94, "status": "OPERATIONAL"}
+{"timestamp": 1773081107.5029862, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 42.24, "flow_bph": 211.89, "temp_f": 88.52, "status": "OPERATIONAL"}
+{"timestamp": 1773081112.5083, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi"
+: 44.34, "flow_bph": 242.51, "temp_f": 94.91, "status": "OPERATIONAL"}
+{"timestamp": 1773081117.5133631, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 52.79, "flow_bph": 245.02, "temp_f": 73.42, "status": "OPERATIONAL"}
+{"timestamp": 1773081122.5185971, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 41.4, "flow_bph": 215.64, "temp_f": 74.83, "status": "OPERATIONAL"}
+{"timestamp": 1773081127.5232685, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 59.19, "flow_bph": 203.2, "temp_f": 72.54, "status": "OPERATIONAL"}
+{"timestamp": 1773081132.5286298, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 56.97, "flow_bph": 218.96, "temp_f": 79.39, "status": "OPERATIONAL"}
+{"timestamp": 1773081137.534327, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 57.25, "flow_bph": 213.96, "temp_f": 87.82, "status": "OPERATIONAL"}
+{"timestamp": 1773081142.5390775, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 44.55, "flow_bph": 226.27, "temp_f": 72.65, "status": "OPERATIONAL"}
+{"timestamp": 1773081147.544867, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 41.9, "flow_bph": 201.71, "temp_f": 76.13, "status": "OPERATIONAL"}
+{"timestamp": 1773081152.5503895, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 49.38, "flow_bph": 204.74, "temp_f": 90.58, "status": "OPERATIONAL"}
+{"timestamp": 1773081157.555428, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 49.36, "flow_bph": 249.03, "temp_f": 86.96, "status": "OPERATIONAL"}
+{"timestamp": 1773081162.5619526, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 40.35, "flow_bph": 216.08, "temp_f": 92.51, "status": "OPERATIONAL"}
+{"timestamp": 1773081167.5691073, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 42.95, "flow_bph": 204.64, "temp_f": 86.54, "status": "OPERATIONAL"}
+{"timestamp": 1773081172.5747306, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 54.3, "flow_bph": 202.16, "temp_f": 90.65, "status": "OPERATIONAL"}
+{"timestamp": 1773081177.579354, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 41.2, "flow_bph": 243.24, "temp_f": 93.36, "status": "OPERATIONAL"}
+{"timestamp": 1773081182.5841396, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 44.6, "flow_bph": 243.94, "temp_f": 87.85, "status": "OPERATIONAL"}
+{"timestamp": 1773081187.5903351, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 42.45, "flow_bph": 239.19, "temp_f": 88.64, "status": "OPERATIONAL"}
+{"timestamp": 1773081192.5950823, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 51.49, "flow_bph": 244.04, "temp_f": 83.42, "status": "OPERATIONAL"}
+{"timestamp": 1773081197.600474, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 58.46, "flow_bph": 235.58, "temp_f": 93.93, "status": "OPERATIONAL"}
+{"timestamp": 1773081202.6049948, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 56.13, "flow_bph": 212.49, "temp_f": 81.61, "status": "OPERATIONAL"}
+{"timestamp": 1773081207.6085653, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 40.13, "flow_bph": 209.64, "temp_f": 87.1, "status": "OPERATIONAL"}
+{"timestamp": 1773081212.6144583, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 52.34, "flow_bph": 221.24, "temp_f": 87.97, "status": "OPERATIONAL"}
+{"timestamp": 1773081217.6174781, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 42.14, "flow_bph": 219.56, "temp_f": 80.36, "status": "OPERATIONAL"}
+{"timestamp": 1773081222.62211, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi
+": 48.64, "flow_bph": 218.18, "temp_f": 80.17, "status": "OPERATIONAL"}
+{"timestamp": 1773081227.623072, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 40.26, "flow_bph": 237.69, "temp_f": 71.31, "status": "OPERATIONAL"}
+{"timestamp": 1773081232.6251066, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 59.37, "flow_bph": 220.47, "temp_f": 74.05, "status": "OPERATIONAL"}
+{"timestamp": 1773081237.6324613, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 50.86, "flow_bph": 248.41, "temp_f": 93.83, "status": "OPERATIONAL"}
+{"timestamp": 1773081242.6371632, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 57.22, "flow_bph": 225.3, "temp_f": 86.3, "status": "OPERATIONAL"}
+{"timestamp": 1773081247.6389544, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 54.65, "flow_bph": 244.28, "temp_f": 89.91, "status": "OPERATIONAL"}
+{"timestamp": 1773081252.643368, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 55.97, "flow_bph": 217.94, "temp_f": 83.26, "status": "OPERATIONAL"}
+{"timestamp": 1773081257.651037, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 53.44, "flow_bph": 224.84, "temp_f": 81.52, "status": "OPERATIONAL"}
+{"timestamp": 1773081262.657291, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 52.25, "flow_bph": 216.68, "temp_f": 72.22, "status": "OPERATIONAL"}
+{"timestamp": 1773081267.6662288, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 41.95, "flow_bph": 242.96, "temp_f": 88.32, "status": "OPERATIONAL"}
+{"timestamp": 1773081272.6693084, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 54.32, "flow_bph": 238.88, "temp_f": 73.5, "status": "OPERATIONAL"}
+{"timestamp": 1773081277.671522, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 80.87, "flow_bph": 203.79, "temp_f": 83.39, "status": "CRITICAL_HIGH_PRESSUR
+E"}
+{"timestamp": 1773081282.6784248, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 47.37, "flow_bph": 248.52, "temp_f": 85.28, "status": "OPERATIONAL"}
+{"timestamp": 1773081287.68655, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_psi
+": 49.57, "flow_bph": 209.26, "temp_f": 88.5, "status": "OPERATIONAL"}
+{"timestamp": 1773081292.6932707, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 44.31, "flow_bph": 237.08, "temp_f": 79.04, "status": "OPERATIONAL"}
+{"timestamp": 1773081297.6975255, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 52.07, "flow_bph": 209.93, "temp_f": 82.25, "status": "OPERATIONAL"}
+{"timestamp": 1773081302.702394, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 58.89, "flow_bph": 211.44, "temp_f": 90.8, "status": "OPERATIONAL"}
+{"timestamp": 1773081307.708193, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 82.57, "flow_bph": 244.67, "temp_f": 74.48, "status": "CRITICAL_HIGH_PRESSUR
+E"}
+{"timestamp": 1773081312.709029, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_ps
+i": 53.74, "flow_bph": 244.79, "temp_f": 90.41, "status": "OPERATIONAL"}
+{"timestamp": 1773081317.7112558, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 54.55, "flow_bph": 223.41, "temp_f": 75.76, "status": "OPERATIONAL"}
+{"timestamp": 1773081322.7184699, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 44.09, "flow_bph": 237.45, "temp_f": 88.08, "status": "OPERATIONAL"}
+{"timestamp": 1773081327.7264261, "tag_id": "FS_001_MAIN_DISCHARGE", "pressure_p
+si": 41.61, "flow_bph": 247.23, "temp_f": 82.52, "status": "OPERATIONAL"}
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> kubectl get pods
+NAME                                   READY   STATUS    RESTARTS      AGE
+kubernetes-bootcamp-67fbdd6b79-nm8wr   1/1     Running   3 (57m ago)   23h
+kubernetes-bootcamp-67fbdd6b79-rb748   1/1     Running   1 (57m ago)   6h47m
+my-plc-test                            1/1     Running   0             11m
+refinery-pump-b4f8447c-72jbm           1/1     Running   5 (57m ago)   2d9h
+refinery-pump-b4f8447c-mjbrd           1/1     Running   5 (57m ago)   2d9h
+refinery-pump-b4f8447c-npkct           1/1     Running   5 (57m ago)   2d9h
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> git add .
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> git commit -m "Complete Week 1: Added Mock PLC and Documentation"
+[main 56fef34] Complete Week 1: Added Mock PLC and Documentation
+ 4 files changed, 55 insertions(+)
+ create mode 100644 week-01-container/Dockerfile
+ create mode 100644 week-01-container/TROUBLESHOOTING.md
+ create mode 100644 week-01-container/mock_plc.py
+ create mode 100644 week-01-container/telemetry-proof.png.png
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> git push origin main
+git : remote: This repository moved. Please use the new location:        
+At line:1 char:1
++ git push origin main
++ ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (remote: This re...cation:         
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+remote:   https://github.com/samuel-systems-eng/oil-flowstation.k8s.git        
+To https://github.com/samuel-systems-eng/industrial.k8s.ecosystem
+   d54df0f..56fef34  main -> main
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> git remote set-url origin https://github.com/samuel-systems-eng/oil-flowstation.k8s.git
+
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> cd
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-01-container> cd ..
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git add .
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git commit -m
+git : error: switch `m' requires a value
+At line:1 char:1
++ git commit -m
++ ~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: switch `m' requires a valu 
+   e:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git commit -m "Docs: Updated root README with Week 1 SRE progress"
+[main 12bbb0a] Docs: Updated root README with Week 1 SRE progress
+ 4 files changed, 21 insertions(+), 1 deletion(-)
+ rename pump-deployment.yml => Archive/pump-deployment.yml (88%)
+ rename pump-service.yml => Archive/pump-service.yml (100%)
+ rename refinery-config.yaml => Archive/refinery-config.yaml (100%)
+ create mode 100644 README.md
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git push origin main
+git : To https://github.com/samuel-systems-eng/oil-flowstation.k8s.git
+At line:1 char:1
++ git push origin main
++ ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (To https://gith...station.k8s.git 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   56fef34..12bbb0a  main -> main
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> Start-Transcript -Path ".\week-01-container\powershell_session_log.txt"
+
+Transcript started, output file is .\week-01-container\powershell_session_log.txt
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> 
