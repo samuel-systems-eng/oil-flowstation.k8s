@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: influxdb-historian
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers: 
+      - name: influxdb
+        image: influxdb:2.7
+        env: #added section to quickly check whether telegraf is bridging mqtt and influxdb properly
+        - name: DOCKER_INFLUXDB_INIT_MODE
+          value: setup
+        - name: DOCKER_INFLUXDB_INIT_USERNAME
+          value: admin
+        - name: DOCKER_INFLUXDB_INIT_PASSWORD
+          value: "password123" 
+        - name: DOCKER_INFLUXDB_INIT_ORG
+          value: flowstation-ops
+        - name: DOCKER_INFLUXDB_INIT_BUCKET
+          value: telemetry-history
+        - name: DOCKER_INFLUXDB_INIT_ADMIN_TOKEN
+          value: "my-super-secret-token" # This MUST match Telegraf's config
+        ports:
+        - containerPort: 8086
+        volumeMounts:
+        - name: storage
+          mountPath: /var/lib/influxdb2 # Where InfluxDB stores its actual data
+      volumes:
+      - name: storage
+        persistentVolumeClaim:
+          claimName: historian-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb-service
+spec:
+  selector:
+    app: influxdb
+  ports:
+    - port: 8086
+      targetPort: 8086

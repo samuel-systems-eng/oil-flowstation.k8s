@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: historian-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Only one node can write at a time (standard for databases)
+  resources:
+    requests:
+      storage: 5Gi # 5GB of storage for our pressure/flow history
