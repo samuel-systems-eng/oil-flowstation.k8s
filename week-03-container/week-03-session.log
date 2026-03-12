@@ -1,0 +1,431 @@
+PS C:\Users\Mr Samuel> minikube start
+* minikube v1.38.1 on Microsoft Windows 11 Pro 23H2
+* Using the virtualbox driver based on existing profile
+* Starting "minikube" primary control-plane node in "minikube" cluster
+minikube : ! Failing to connect to https://registry.k8s.io/ from both inside 
+the minikube VM and host machine
+At line:1 char:1
++ minikube start
++ ~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (! Failing to co...nd host machine 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+* To pull new external images, you may need to configure a proxy: 
+https://minikube.sigs.k8s.io/docs/reference/networking/proxy/
+* Configuring bridge CNI (Container Networking Interface) ...
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image docker.io/kubernetesui/dashboard:v2.7.0
+  - Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
+* Verifying Kubernetes components...
+* Some dashboard features require the metrics-server addon. To enable all featur
+es please run:
+
+	minikube addons enable metrics-server
+
+* Enabled addons: storage-provisioner, dashboard, default-storageclass
+* kubectl not found. If you need it, try: 'minikube kubectl -- get pods -A'
+* Done! kubectl is now configured to use "minikube" cluster and "default" namesp
+ace by default
+
+PS C:\Users\Mr Samuel> minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+
+PS C:\Users\Mr Samuel> kubectl get pods
+NAME                                    READY   STATUS    RESTARTS      AGE
+kubernetes-bootcamp-67fbdd6b79-nm8wr    1/1     Running   5 (19h ago)   3d20h
+kubernetes-bootcamp-67fbdd6b79-rb748    1/1     Running   3 (19h ago)   3d3h
+mosquitto-deployment-5bf96bb9c8-djsvp   1/1     Running   1 (19h ago)   24h
+my-plc-test                             1/1     Running   2 (19h ago)   2d21h
+my-plc-v2                               1/1     Running   1 (19h ago)   23h
+refinery-pump-b4f8447c-72jbm            1/1     Running   7 (19h ago)   5d6h
+refinery-pump-b4f8447c-mjbrd            1/1     Running   7 (19h ago)   5d6h
+refinery-pump-b4f8447c-npkct            1/1     Running   7 (19h ago)   5d6h
+
+PS C:\Users\Mr Samuel> cd C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container
+Set-Location : A positional parameter cannot be found that accepts argument 
+'Samuel\Documents\SAMUEL\KCNA'.
+At line:1 char:1
++ cd C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL P ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-Location], ParameterBi 
+   ndingException
+    + FullyQualifiedErrorId : PositionalParameterNotFound,Microsoft.PowerShell 
+   .Commands.SetLocationCommand
+ 
+
+PS C:\Users\Mr Samuel> cd "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container"
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> cd "week-03-container"
+cd : Cannot find path 'C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL 
+PROJECTS\flowstation-project\week-03-container\week-03-container' because it does not exist.
+At line:1 char:1
++ cd "week-03-container"
++ ~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (C:\Users\Mr Sam...ek-03-container:String) [Set-Location], ItemNotFoundException
+    + FullyQualifiedErrorId : PathNotFound,Microsoft.PowerShell.Commands.SetLocationCommand
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> kubectl apply -f week-03-container/historian-pvc.yaml.yml
+kubectl : error: the path "week-03-container/historian-pvc.yaml.yml" does not 
+exist
+At line:1 char:1
++ kubectl apply -f week-03-container/historian-pvc.yaml.yml
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: the path... does not exist 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> kubectl apply -f week-03-container/historian-pvc.yaml.yaml
+kubectl : error: the path "week-03-container/historian-pvc.yaml.yaml" does not 
+exist
+At line:1 char:1
++ kubectl apply -f week-03-container/historian-pvc.yaml.yaml
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: the path... does not exist 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\historian-pvc.yaml"
+persistentvolumeclaim/historian-pvc created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> kubectl apply -f C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\influxdb-deployment.yaml
+kubectl : error: Unexpected args: [Samuel\Documents\SAMUEL\KCNA and 
+KUBERNATES\PERSONAL 
+PROJECTS\flowstation-project\week-03-container\influxdb-deployment.yaml]
+At line:1 char:1
++ kubectl apply -f C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNA ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (error: Unexpect...eployment.yaml] 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+See 'kubectl apply -h' for help and examples
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\influxdb-deployment.yaml"
+deployment.apps/influxdb-historian created
+service/influxdb-service created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> cd~
+cd~ : The term 'cd~' is not recognized as the name of a cmdlet, function, 
+script file, or operable program. Check the spelling of the name, or if a path 
+was included, verify that the path is correct and try again.
+At line:1 char:1
++ cd~
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (cd~:String) [], CommandNotFound 
+   Exception
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container> cd ~
+
+PS C:\Users\Mr Samuel> kubectl get pvc
+NAME            STATUS   VOLUME                                     CAPACITY   A
+CCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+historian-pvc   Bound    pvc-b304f39d-3544-471c-96fd-d1d555459a50   5Gi        R
+WO            standard       <unset>                 4m13s
+
+PS C:\Users\Mr Samuel> get pod deployment influxdb-historian
+get : The term 'get' is not recognized as the name of a cmdlet, function, 
+script file, or operable program. Check the spelling of the name, or if a path 
+was included, verify that the path is correct and try again.
+At line:1 char:1
++ get pod deployment influxdb-historian
++ ~~~
+    + CategoryInfo          : ObjectNotFound: (get:String) [], CommandNotFound 
+   Exception
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+
+PS C:\Users\Mr Samuel> kubectl get pods
+NAME                                    READY   STATUS    RESTARTS      AGE
+influxdb-historian-584ff669bd-45b6m     1/1     Running   0             27m
+kubernetes-bootcamp-67fbdd6b79-nm8wr    1/1     Running   5 (20h ago)   3d21h
+kubernetes-bootcamp-67fbdd6b79-rb748    1/1     Running   3 (20h ago)   3d4h
+mosquitto-deployment-5bf96bb9c8-djsvp   1/1     Running   1 (20h ago)   25h
+my-plc-test                             1/1     Running   2 (20h ago)   2d22h
+my-plc-v2                               1/1     Running   1 (20h ago)   24h
+refinery-pump-b4f8447c-72jbm            1/1     Running   7 (20h ago)   5d7h
+refinery-pump-b4f8447c-mjbrd            1/1     Running   7 (20h ago)   5d7h
+refinery-pump-b4f8447c-npkct            1/1     Running   7 (20h ago)   5d7h
+
+PS C:\Users\Mr Samuel> kubectl delete pod influxdb-historian-584ff669bd-45b6m
+pod "influxdb-historian-584ff669bd-45b6m" deleted
+
+PS C:\Users\Mr Samuel> kubectl get pods -w
+NAME                                    READY   STATUS    RESTARTS      AGE
+influxdb-historian-584ff669bd-n6dzw     1/1     Running   0             13s
+kubernetes-bootcamp-67fbdd6b79-nm8wr    1/1     Running   5 (20h ago)   3d21h
+kubernetes-bootcamp-67fbdd6b79-rb748    1/1     Running   3 (20h ago)   3d5h
+mosquitto-deployment-5bf96bb9c8-djsvp   1/1     Running   1 (20h ago)   25h
+my-plc-test                             1/1     Running   2 (20h ago)   2d22h
+my-plc-v2                               1/1     Running   1 (20h ago)   24h
+refinery-pump-b4f8447c-72jbm            1/1     Running   7 (20h ago)   5d7h
+refinery-pump-b4f8447c-mjbrd            1/1     Running   7 (20h ago)   5d7h
+refinery-pump-b4f8447c-npkct            1/1     Running   7 (20h ago)   5d7h
+
+PS C:\Users\Mr Samuel> kubectl logs influxdb-historian-584ff669bd-n6dzw
+2026-03-12T16:52:33.966469705Z	info	found existing boltdb file, skipping setup w
+rapper	{"system": "docker", "bolt_path": "/var/lib/influxdb2/influxd.bolt"}
+2026-03-12T16:52:34.088674577Z	info	found existing boltdb file, skipping setup w
+rapper	{"system": "docker", "bolt_path": "/var/lib/influxdb2/influxd.bolt"}
+ts=2026-03-12T16:52:34.559742Z lvl=info msg="Welcome to InfluxDB" log_id=11_kGzV
+l000 version=v2.7.12 commit=ec9dcde5d6 build_date=2025-05-20T22:48:39Z log_level
+=info
+ts=2026-03-12T16:52:34.559773Z lvl=warn msg="nats-port argument is deprecated an
+d unused" log_id=11_kGzVl000
+ts=2026-03-12T16:52:34.561553Z lvl=info msg="Resources opened" log_id=11_kGzVl00
+0 service=bolt path=/var/lib/influxdb2/influxd.bolt
+ts=2026-03-12T16:52:34.562026Z lvl=info msg="Resources opened" log_id=11_kGzVl00
+0 service=sqlite path=/var/lib/influxdb2/influxd.sqlite
+ts=2026-03-12T16:52:34.567705Z lvl=info msg="Using data dir" log_id=11_kGzVl000 
+service=storage-engine service=store path=/var/lib/influxdb2/engine/data
+ts=2026-03-12T16:52:34.567776Z lvl=info msg="Compaction settings" log_id=11_kGzV
+l000 service=storage-engine service=store max_concurrent_compactions=1 throughpu
+t_bytes_per_second=50331648 throughput_bytes_per_second_burst=50331648
+ts=2026-03-12T16:52:34.567789Z lvl=info msg="Open store (start)" log_id=11_kGzVl
+000 service=storage-engine service=store op_name=tsdb_open op_event=start
+ts=2026-03-12T16:52:34.567885Z lvl=info msg="Open store (end)" log_id=11_kGzVl00
+0 service=storage-engine service=store op_name=tsdb_open op_event=end op_elapsed
+=0.097ms
+ts=2026-03-12T16:52:34.568154Z lvl=info msg="Starting retention policy enforceme
+nt service" log_id=11_kGzVl000 service=retention check_interval=30m
+ts=2026-03-12T16:52:34.568211Z lvl=info msg="Starting precreation service" log_i
+d=11_kGzVl000 service=shard-precreation check_interval=10m advance_period=30m
+ts=2026-03-12T16:52:34.570122Z lvl=info msg="Starting query controller" log_id=1
+1_kGzVl000 service=storage-reads concurrency_quota=1024 initial_memory_bytes_quo
+ta_per_query=9223372036854775807 memory_bytes_quota_per_query=922337203685477580
+7 max_memory_bytes=0 queue_size=1024
+ts=2026-03-12T16:52:34.574728Z lvl=info msg="Configuring InfluxQL statement exec
+utor (zeros indicate unlimited)." log_id=11_kGzVl000 max_select_point=0 max_sele
+ct_series=0 max_select_buckets=0
+ts=2026-03-12T16:52:34.583462Z lvl=info msg=Starting log_id=11_kGzVl000 service=
+telemetry interval=8h
+ts=2026-03-12T16:52:34.583675Z lvl=info msg=Listening log_id=11_kGzVl000 service
+=tcp-listener transport=http addr=:8086 port=8086
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\telegraf-config.yaml"
+configmap/telegraf-config created
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\telegraf-deployment.yaml"
+deployment.apps/telegraf-bridge created
+
+PS C:\Users\Mr Samuel> kubectl logs -l app=telegraf
+kubectl : Error from server (BadRequest): container "telegraf" in pod 
+"telegraf-bridge-5fbff58d5d-cwzf6" is waiting to start: ContainerCreating
+At line:1 char:1
++ kubectl logs -l app=telegraf
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (Error from serv...ntainerCreating 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PS C:\Users\Mr Samuel> kubectl get pods telegraf-bridge-5fbff58d5d-cwzf6
+NAME                               READY   STATUS    RESTARTS   AGE
+telegraf-bridge-5fbff58d5d-cwzf6   1/1     Running   0          2m51s
+
+PS C:\Users\Mr Samuel> kubectl logs -l app=telegraf
+2026-03-12T17:08:52Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"tel
+egraf-bridge-5fbff58d5d-cwzf6", Flush Interval:10s
+2026-03-12T17:08:52Z I! [inputs.mqtt_consumer] Connected [tcp://mosquitto-servic
+e:1883]
+2026-03-12T17:09:02Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:09:02Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:09:12Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:09:12Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:09:22Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:09:22Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:09:32Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:09:32Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\telegraf-deployment.yaml"
+deployment.apps/telegraf-bridge unchanged
+
+PS C:\Users\Mr Samuel> kubectl rollout restart deployment telegraf-bridge
+deployment.apps/telegraf-bridge restarted
+
+PS C:\Users\Mr Samuel> kubectl logs -l app=telegraf
+2026-03-12T17:20:39Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"tel
+egraf-bridge-7f6bd99f4c-c7q28", Flush Interval:10s
+2026-03-12T17:20:39Z I! [inputs.mqtt_consumer] Connected [tcp://mosquitto-servic
+e:1883]
+2026-03-12T17:20:49Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:20:49Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:20:59Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:20:59Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:21:09Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:21:09Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:21:19Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:21:19Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+
+PS C:\Users\Mr Samuel> kubectl delete deployment influxdb-historian
+deployment.apps "influxdb-historian" deleted
+
+PS C:\Users\Mr Samuel> kubectl delete pvc historian-pvc
+persistentvolumeclaim "historian-pvc" deleted
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\historian-pvc.yaml"
+persistentvolumeclaim/historian-pvc created
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\influxdb-deployment.yaml"
+deployment.apps/influxdb-historian created
+service/influxdb-service unchanged
+
+PS C:\Users\Mr Samuel> kubectl rollout restart deployment telegraf-bridge
+deployment.apps/telegraf-bridge restarted
+
+PS C:\Users\Mr Samuel> kubectl logs -l app=telegraf --tail 20
+2026-03-12T17:28:10Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:28:10Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:28:20Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:28:20Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:28:30Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:28:30Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:28:40Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:28:40Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:28:50Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:28:50Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:29:00Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:29:00Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:29:10Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:29:10Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:29:20Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:29:20Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:29:30Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:29:30Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+2026-03-12T17:29:40Z E! [outputs.influxdb_v2] When writing to [http://influxdb-s
+ervice:8086]: failed to write metric to telemetry-history (401 Unauthorized): un
+authorized: unauthorized access
+2026-03-12T17:29:40Z E! [agent] Error writing to outputs.influxdb_v2: failed to 
+send metrics to any configured server(s)
+
+PS C:\Users\Mr Samuel> kubectl delete deployment influxdb-historian telegraf-bridge
+deployment.apps "influxdb-historian" deleted
+deployment.apps "telegraf-bridge" deleted
+
+PS C:\Users\Mr Samuel> kubectl delete pvc historian-pvc
+persistentvolumeclaim "historian-pvc" deleted
+
+PS C:\Users\Mr Samuel> kubectl get pvc
+kubectl : No resources found in default namespace.
+At line:1 char:1
++ kubectl get pvc
++ ~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (No resources found in default nam 
+   espace.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\historian-pvc.yaml"
+persistentvolumeclaim/historian-pvc created
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\influxdb-deployment.yaml"
+deployment.apps/influxdb-historian created
+service/influxdb-service unchanged
+
+PS C:\Users\Mr Samuel> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-03-container\telegraf-deployment.yaml"
+deployment.apps/telegraf-bridge created
+
+PS C:\Users\Mr Samuel> kubectl logs -l app=telegraf --tail 20
+2026-03-12T17:36:05Z I! Loading config: /etc/telegraf/telegraf.conf
+2026-03-12T17:36:05Z I! Starting Telegraf 1.28.5 brought to you by InfluxData th
+e makers of InfluxDB
+2026-03-12T17:36:05Z I! Available plugins: 240 inputs, 9 aggregators, 29 process
+ors, 24 parsers, 59 outputs, 5 secret-stores
+2026-03-12T17:36:05Z I! Loaded inputs: mqtt_consumer
+2026-03-12T17:36:05Z I! Loaded aggregators: 
+2026-03-12T17:36:05Z I! Loaded processors: 
+2026-03-12T17:36:05Z I! Loaded secretstores: 
+2026-03-12T17:36:05Z I! Loaded outputs: influxdb_v2
+2026-03-12T17:36:05Z I! Tags enabled: host=telegraf-bridge-5fbff58d5d-h7ggn
+2026-03-12T17:36:05Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"tel
+egraf-bridge-5fbff58d5d-h7ggn", Flush Interval:10s
+2026-03-12T17:36:05Z I! [inputs.mqtt_consumer] Connected [tcp://mosquitto-servic
+e:1883]
+
+PS C:\Users\Mr Samuel> cd "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project"
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git add .
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git commit -m "Week 3 Complete: Persistence and Data Historian"
+[main d5b7662] Week 3 Complete: Persistence and Data Historian
+ 7 files changed, 126 insertions(+), 1 deletion(-)
+ create mode 100644 week-03-container/Troubleshooting.md
+ create mode 100644 week-03-container/historian-pvc.yaml
+ create mode 100644 week-03-container/influxdb-deployment.yaml
+ create mode 100644 week-03-container/telegraf-config.yaml
+ create mode 100644 week-03-container/telegraf-deployment.yaml
+ create mode 100644 week-03-container/telegraf_handshake.png
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> git push origin main
+git : To https://github.com/samuel-systems-eng/oil-flowstation.k8s.git
+At line:1 char:1
++ git push origin main
++ ~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (To https://gith...station.k8s.git:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+   2c24ddd..d5b7662  main -> main
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project> 
