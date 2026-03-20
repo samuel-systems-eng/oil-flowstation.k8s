@@ -1,0 +1,180 @@
+PS C:\Users\Mr Samuel> minikube start
+* minikube v1.38.1 on Microsoft Windows 11 Pro 23H2
+* Using the virtualbox driver based on existing profile
+* Starting "minikube" primary control-plane node in "minikube" cluster
+minikube : ! Failing to connect to https://registry.k8s.io/ from both inside 
+the minikube VM and host machine
+At line:1 char:1
++ minikube start
++ ~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (! Failing to co...nd host machine 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+* To pull new external images, you may need to configure a proxy: 
+https://minikube.sigs.k8s.io/docs/reference/networking/proxy/
+* Configuring bridge CNI (Container Networking Interface) ...
+  - Using image docker.io/kubernetesui/dashboard:v2.7.0
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image docker.io/kubernetesui/metrics-scraper:v1.0.8
+* Some dashboard features require the metrics-server addon. To enable all featur
+es please run:
+
+	minikube addons enable metrics-server
+
+* Enabled addons: storage-provisioner, dashboard, default-storageclass
+* Verifying Kubernetes components...
+* kubectl not found. If you need it, try: 'minikube kubectl -- get pods -A'
+* Done! kubectl is now configured to use "minikube" cluster and "default" namesp
+ace by default
+
+PS C:\Users\Mr Samuel> minikube status
+minikube
+type: Control Plane
+host: Running
+kubelet: Running
+apiserver: Running
+kubeconfig: Configured
+
+
+PS C:\Users\Mr Samuel> kubectl config view
+apiVersion: v1
+clusters:
+- cluster:
+    certificate-authority: C:\Users\Mr Samuel\.minikube\ca.crt
+    extensions:
+    - extension:
+        last-update: Fri, 20 Mar 2026 13:44:22 WAT
+        provider: minikube.sigs.k8s.io
+        version: v1.38.1
+      name: cluster_info
+    server: https://192.168.59.101:8443
+  name: minikube
+contexts:
+- context:
+    cluster: minikube
+    extensions:
+    - extension:
+        last-update: Fri, 20 Mar 2026 13:44:22 WAT
+        provider: minikube.sigs.k8s.io
+        version: v1.38.1
+      name: context_info
+    namespace: default
+    user: minikube
+  name: minikube
+current-context: minikube
+kind: Config
+preferences: {}
+users:
+- name: minikube
+  user:
+    client-certificate: C:\Users\Mr Samuel\.minikube\profiles\minikube\client.crt
+    client-key: C:\Users\Mr Samuel\.minikube\profiles\minikube\client.key
+
+PS C:\Users\Mr Samuel> kubectl get pods
+NAME                                    READY   STATUS    RESTARTS        AGE
+influxdb-historian-9df8f965f-92dj8      1/1     Running   1               7d19h
+kubernetes-bootcamp-67fbdd6b79-nm8wr    1/1     Running   6 (7d18h ago)   11d
+kubernetes-bootcamp-67fbdd6b79-rb748    1/1     Running   4 (7d18h ago)   11d
+mosquitto-deployment-5bf96bb9c8-djsvp   1/1     Running   2 (7d18h ago)   8d
+my-plc-test                             1/1     Running   3 (7d18h ago)   10d
+my-plc-v2                               1/1     Running   6 (7m8s ago)    8d
+refinery-pump-b4f8447c-72jbm            1/1     Running   8               13d
+refinery-pump-b4f8447c-mjbrd            1/1     Running   8 (7d18h ago)   13d
+refinery-pump-b4f8447c-npkct            1/1     Running   8 (7d18h ago)   13d
+telegraf-bridge-5fbff58d5d-h7ggn        1/1     Running   2 (6m51s ago)   7d19h
+
+PS C:\Users\Mr Samuel> cd "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-04-container"
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-04-container> kubectl apply -f "C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-04-container\grafana-stack.yaml"
+persistentvolumeclaim/grafana-pvc created
+deployment.apps/grafana-deployment created
+service/grafana-service created
+
+PS C:\Users\Mr Samuel\Documents\SAMUEL\KCNA and KUBERNATES\PERSONAL PROJECTS\flowstation-project\week-04-container> cd ~
+
+PS C:\Users\Mr Samuel> minikube service grafana-service
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ NAMESPACE â”‚      NAME       â”‚ TARGET PORT â”‚             URL             â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ default   â”‚ grafana-service â”‚ 3000        â”‚ http://192.168.59.101:32126 â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+
+minikube : X Exiting due to SVC_UNREACHABLE: service not available: no running pod for service grafana-service found
+At line:1 char:1
++ minikube service grafana-service
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (X Exiting due t...a-service found:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+* 
+â•â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â•®
+â”‚                                                                                                                â”‚
+â”‚    * If the above advice does not help, please let us know:                                                    â”‚
+â”‚      https://github.com/kubernetes/minikube/issues/new/choose                                                  â”‚
+â”‚                                                                                                                â”‚
+â”‚    * Please run `minikube logs --file=logs.txt` and attach logs.txt to the GitHub issue.                       â”‚
+â”‚    * Please also attach the following file to the GitHub issue:                                                â”‚
+â”‚    * - C:\Users\MRSAMU~1\AppData\Local\Temp\minikube_service_a234dad0224235e0879b82b97a3cee50e380265e_0.log    â”‚
+â”‚                                                                                                                â”‚
+â•°â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â
+”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â•¯
+
+
+PS C:\Users\Mr Samuel> kubectl get pods
+NAME                                    READY   STATUS    RESTARTS        AGE
+grafana-deployment-6c6fd65594-rwxcc     1/1     Running   0               13m
+influxdb-historian-9df8f965f-92dj8      1/1     Running   1               7d19h
+kubernetes-bootcamp-67fbdd6b79-nm8wr    1/1     Running   6 (7d18h ago)   11d
+kubernetes-bootcamp-67fbdd6b79-rb748    1/1     Running   4 (7d18h ago)   11d
+mosquitto-deployment-5bf96bb9c8-djsvp   1/1     Running   2 (7d18h ago)   8d
+my-plc-test                             1/1     Running   3 (7d18h ago)   10d
+my-plc-v2                               1/1     Running   6 (33m ago)     8d
+refinery-pump-b4f8447c-72jbm            1/1     Running   8               13d
+refinery-pump-b4f8447c-mjbrd            1/1     Running   8 (7d18h ago)   13d
+refinery-pump-b4f8447c-npkct            1/1     Running   8 (7d18h ago)   13d
+telegraf-bridge-5fbff58d5d-h7ggn        1/1     Running   2 (33m ago)     7d19h
+
+PS C:\Users\Mr Samuel> minikube service grafana-service
+â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â
+”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ NAMESPACE â”‚      NAME       â”‚ TARGET PORT â”‚             URL           
+  â”‚
+â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â
+”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤
+â”‚ default   â”‚ grafana-service â”‚ 3000        â”‚ http://192.168.59.101:3212
+6 â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â
+”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+* Opening service default/grafana-service in default browser...
+
+PS C:\Users\Mr Samuel> kubectl delete pod -l app-grafana
+No resources found
+
+PS C:\Users\Mr Samuel> kubectl delete pod -l app=grafana
+pod "grafana-deployment-6c6fd65594-rwxcc" deleted
+
+PS C:\Users\Mr Samuel> kubectl get pods -w
+NAME                                    READY   STATUS    RESTARTS        AGE
+grafana-deployment-6c6fd65594-wc46v     1/1     Running   0               2m26s
+influxdb-historian-9df8f965f-92dj8      1/1     Running   1               7d20h
+kubernetes-bootcamp-67fbdd6b79-nm8wr    1/1     Running   6 (7d19h ago)   11d
+kubernetes-bootcamp-67fbdd6b79-rb748    1/1     Running   4 (7d19h ago)   11d
+mosquitto-deployment-5bf96bb9c8-djsvp   1/1     Running   2 (7d19h ago)   8d
+my-plc-test                             1/1     Running   3 (7d19h ago)   10d
+my-plc-v2                               1/1     Running   6 (78m ago)     8d
+refinery-pump-b4f8447c-72jbm            1/1     Running   8               13d
+refinery-pump-b4f8447c-mjbrd            1/1     Running   8 (7d19h ago)   13d
+refinery-pump-b4f8447c-npkct            1/1     Running   8 (7d19h ago)   13d
+telegraf-bridge-5fbff58d5d-h7ggn        1/1     Running   2 (77m ago)     7d20h
+
+PS C:\Users\Mr Samuel> 
